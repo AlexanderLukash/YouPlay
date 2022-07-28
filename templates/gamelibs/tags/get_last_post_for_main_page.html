@@ -1,0 +1,39 @@
+{% load static %}
+{% for post in get_last_post_for_main_page %}
+    <div class="news-one">
+        <div class="row vertical-gutter">
+            <div class="col-md-4">
+                <a href="{{ post.get_absolute_url }}" class="angled-img">
+                    <div class="img">
+                        {% for game in post.games.all %}
+                            <img src="{{ game.poster.url }}" alt="">
+                        {% endfor %}
+                    </div>
+                    <div class="youplay-hexagon-rating youplay-hexagon-rating-small" data-max="10"
+                         data-size="50"
+                         title="{{ post.rank }} out of 10"><span>{{ post.rank }}</span>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-8">
+                <div class="clearfix">
+                    <h3 class="h2 pull-left m-0"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                    <span class="date pull-right"><i class="fa fa-calendar"></i> {{ post.premiere }}</span>
+                </div>
+                <div class="tags">
+                    {% for game in post.games.all %}
+                        <i class="fa fa-tags"></i> <a href="{{ game.get_absolute_url }}">{{ game.title }}</a>,
+                    {% endfor %}
+                    {% for tags in post.tags.all %}
+                        <a href="#">{{ tags.title }}</a>,
+                    {% endfor %}
+
+                </div>
+                <div class="description">
+                    {{ post.foreword_description }}
+                </div>
+                <a href="{{ post.get_absolute_url }}" class="btn read-more pull-left">Детальніше</a>
+            </div>
+        </div>
+    </div>
+{% endfor %}

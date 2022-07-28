@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+{% load static %}
+{% load game_tag %}
+{% load hitcount_tags %}
+<html>
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>youplay</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- Icon -->
+    <link rel="icon" type="image/png" href="{% static 'dark/assets/images/icon.png' %}">
+    <!-- Google Fonts -->
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/fontawesome.min.css"
+          integrity="sha384-zIaWifL2YFF1qaDiAo0JFgsmasocJ/rqu7LKYH8CoBEXqGbb9eO+Xi3s6fQhgFWM" crossorigin="anonymous">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/bower_components/bootstrap/dist/css/bootstrap.min.css' %}"/>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/bower_components/font-awesome/css/font-awesome.min.css' %}"/>
+
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/bower_components/owl.carousel/dist/assets/owl.carousel.min.css' %}"/>
+
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/bower_components/magnific-popup/dist/magnific-popup.css' %}"/>
+
+    <!-- Social Likes -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/bower_components/social-likes/dist/social-likes_flat.css' %}"/>
+    <!-- Youplay -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/youplay/css/youplay.min.css' %}"/>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'dark/assets/css/custom.css' %}"/>
+    <!-- RTL (uncomment this to enable RTL support) -->
+    <!-- <link rel="stylesheet" type="text/css" href="../assets/youplay/css/youplay-rtl.css" /> -->
+
+</head>
+
+
+<body>
+
+<!-- Preloader -->
+<div class="page-preloader preloader-wrapp">
+    <img src="{% static 'dark/assets/images/logo.png' %}" alt="">
+    <div class="preloader"></div>
+</div>
+<!-- /Preloader -->
+
+<!-- Navbar -->
+<nav class="navbar-youplay navbar navbar-default navbar-fixed-top ">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="off-canvas" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'main' %}">
+                <img src="{% static 'dark/assets/images/logo.png' %}" alt="">
+            </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown dropdown-hover ">
+                    <a href="{% url 'store' %}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Магазин <span class="caret"></span> <span class="label">ігри</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <ul role="menu">
+                            <li><a href="{% url 'store' %}">Список Товарів</a>
+                            </li>
+                            <li><a href="{% url 'store_popular' %}">Популярні Товари</a>
+                            </li>
+                            <li><a href="{% url 'cart_detail' %}">Кошик
+                                {% if request.session.cart|length == 0 %}
+                                {% else %}
+                                    <span class="badge bg-warning">{{ request.session.cart|length }}</span>
+                                    <span class="caret"></span>
+                                {% endif %}</a>
+                            </li>
+                            <li><a href="{% url 'сheckout' %}">Оформлення Замовлення</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropdown dropdown-hover active">
+                    <a href="{% url 'blog' %}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Блог <span class="caret"></span> <span class="label">новини</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <ul role="menu">
+                            <li><a href="{% url 'blog' %}">Список Новин</a>
+                            </li>
+                            <li><a href="{% url 'blog_popular' %}">Популярні Новини</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropdown dropdown-hover ">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Додатково <span class="caret"></span> <span class="label">повний список</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <ul role="menu">
+                            <li class="dropdown dropdown-submenu pull-left ">
+                                <a href="{% url 'userpage' %}" class="dropdown-toggle" data-toggle="dropdown"
+                                   role="button"
+                                   aria-expanded="false">Профіль</a>
+                                <div class="dropdown-menu">
+                                    {% if user.is_authenticated %}
+                                        <ul role="menu">
+                                            <li><a href="{% url 'userpage' %}">Профіль</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'user_settings_page' user.profile.id %}">Налаштування</a>
+                                            </li>
+                                            {% if request.user|has_group:"Редактор" %}
+                                                <li>
+                                                    <a href="{% url 'add_post' %}">Додати Пост</a>
+                                                </li>
+                                            {% else %}
+                                            {% endif %}
+                                            {% if request.user.is_superuser %}
+                                                <li><a href="{% url 'admin:index' %}" target="_blank">Адмін панель</a>
+                                                </li>
+                                            {% else %}
+                                            {% endif %}
+                                        </ul>
+                                    {% else %}
+                                        <ul role="menu">
+                                            <li class="divider"></li>
+                                            <li><a href="{% url 'signup' %}">Зареєструватися</a>
+                                            </li>
+                                            <li><a href="{% url 'login' %}">Увійти</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li><a href="{% url 'contact_us' %}">Напишіть Нам</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                    <li class="dropdown dropdown-hover">
+                        <a href="{% url 'userpage' %}" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            {{ user.get_username }}
+                            <span
+                                    class="label">це ви</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <ul role="menu">
+                                <li class="divider"></li>
+                                <li class="dropdown dropdown-submenu pull-left ">
+                                    <a href="{% url 'userpage' %}" class="dropdown-toggle" data-toggle="dropdown"
+                                       role="button"
+                                       aria-expanded="false">Профіль</a>
+                                    <div class="dropdown-menu">
+                                        <ul role="menu">
+                                            <li><a href="{% url 'userpage' %}">Профіль</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'user_settings_page' user.profile.id %}">Налаштування</a>
+                                            </li>
+                                            {% if request.user|has_group:"Редактор" %}
+                                                <li>
+                                                    <a href="{% url 'add_post' %}">Додати Пост</a>
+                                                </li>
+                                            {% else %}
+                                            {% endif %}
+                                            {% if request.user.is_superuser %}
+                                                <li><a href="{% url 'admin:index' %}" target="_blank">Адмін панель</a>
+                                                </li>
+                                            {% else %}
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="{% url 'cart_detail' %}">Кошик
+                                    {% if request.session.cart|length == 0 %}
+                                    {% else %}
+                                        <span class="badge bg-warning">{{ request.session.cart|length }}</span>
+                                        <span class="caret"></span>
+                                    {% endif %}</a>
+                                </li>
+                                <li class="divider"></li>
+
+                                <li><a href="{% url 'logout' %}">Вихід</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="dropdown dropdown-hover">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Профіль <span class="caret"></span> <span
+                                class="label">увійдіть або зареєструйтеся</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <ul role="menu">
+                                <li class="divider"></li>
+                                <li><a href="{% url 'signup' %}">Зареєструватися</a>
+                                </li>
+                                <li><a href="{% url 'login' %}">Увійти</a>
+                                </li>
+                                <li class="divider"></li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+                <li>
+                    <a class="search-toggle" href="">
+                        <i class="fa fa-search"></i>
+                    </a>
+                </li>
+                <li class="dropdown dropdown-hover dropdown-cart">
+                    <a href="#!" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <i class="fa fa-shopping-cart"></i> 
+                        {% if request.session.cart|length == 0 %}
+                        {% else %}
+                            <span class="badge bg-default">{{ request.session.cart|length }}</span>
+                            <span class="caret"></span>
+                        {% endif %}
+                    </a>
+                    <div class="dropdown-menu" style="width: 300px;">
+
+                        <div class="row youplay-side-news">
+                            <div class="col-xs-3 col-md-4">
+                                <a class="angled-img"></a>
+                            </div>
+                            <div class="col-xs-9 col-md-8">
+
+                                <h4 class="ellipsis"><a href="{% url 'store' %}"
+                                                        title="Перейти До Магазину">Список Товарів</a></h4>
+
+                            </div>
+                        </div>
+                        {% for key,value in request.session.cart.items %}
+
+                            <div class="row youplay-side-news">
+                                <div class="col-xs-3 col-md-4">
+                                    <a href="{{ value.url }}" class="angled-img" title="{{ value.name }}">
+                                        <div class="img">
+
+                                            <img src="{{ value.image }}" alt="">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xs-9 col-md-8">
+                                    <a href="{% url 'item_clear' value.product_id %}" style="text-decoration: none;"
+                                       class="pull-right mr-10"><i
+                                            class="fa fa-times" title="Видалити З Кошика"></i></a>
+
+                                    <h4 class="ellipsis"><a href="{{ value.url }}"
+                                                            title="{{ value.name }}">{{ value.name }}</a></h4>
+                                    <span class="quantity">{{ value.quantity }} × <span
+                                            class="amount">${{ value.price }}</span></span>
+                                </div>
+                            </div>
+
+
+
+                        {% endfor %}
+
+
+                        <div class="btn-group pull-right m-15">
+                            <a href="{% url 'cart_detail' %}" class="btn btn-default btn-sm">Кошик</a>
+                            <a href="{% url 'сheckout' %}" class="btn btn-default btn-sm">Оформлення</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- /Navbar -->
+
+
+<!-- Main Content -->
+<section class="content-wrap">
+
+    <!-- Banner -->
+    {% for game in post.games.all %}
+        <div class="youplay-banner banner-top youplay-banner-parallax xsmall">
+            <div class="image" style="background-image: url('{{ game.banner.url }}')"></div>
+            <div class="info">
+                <div>
+                    <div class="container">
+                        <h1>{{ post.title }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <!-- /Banner -->
+
+
+    <div class="container youplay-news youplay-post">
+
+        <div class="col-md-9">
+            <!-- Post Info -->
+            <article class="news-one">
+
+                <!-- Post Text -->
+                <div class="description">
+                    {% for game in post.games.all %}
+                        <a href="{{ game.treiler }}" class="angled-img pull-left video-popup">
+                            <div class="img">
+                                <img src="{{ game.poster.url }}" alt="">
+                            </div>
+                            <i class="fa fa-play icon"></i>
+                        </a>
+                    {% endfor %}
+                    <p>
+                        {{ post.description|safe }}
+                    </p>
+                </div>
+                <!-- /Post Text -->
+
+                <!-- Review Rating -->
+                <div class="youplay-review-rating">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="youplay-hexagon-rating" data-max="10" title="{{ post.rank }} out of 10">
+                                <span>{{ post.rank }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <h3 class="mt-0">Плюси</h3>
+                            <ul>
+                                {% for good in post.good.all %}
+                                    <li><i class="fa fa-plus-circle"></i> {{ good.title }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h3 class="mt-0">Мінуси</h3>
+                            <ul>
+                                {% for bad in post.bad.all %}
+                                    <li><i class="fa fa-plus-circle"></i> {{ bad.title }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Review Rating -->
+
+                <!-- Post Tags -->
+                <div class="tags">
+                    {% for game in post.games.all %}
+                        <i class="fa fa-tags"></i> <a href="{{ game.get_absolute_url }}">{{ game.title }}</a>,
+                    {% endfor %}
+                    {% for tags in post.tags.all %}
+                        <a href="#">{{ tags.title }}</a>,
+                    {% endfor %}
+                </div>
+                <!-- /Post Tags -->
+
+                <!-- Post Meta -->
+                <div class="meta">
+                    <div class="item">
+                        <i class="fa fa-calendar meta-icon"></i>
+                        Опубліковано {{ post.premiere }}
+                    </div>
+                    <div class="item">
+                        <i class="fa fa-eye meta-icon"></i>
+                        Переглядів {% get_hit_count for post %}
+                    </div>
+                </div>
+                {% if request.user|has_group:"Редактор" %}
+                    <br>
+                    <a href="{% url 'edit_post' post.id %}" class="btn read-more pull-left">Редагувати</a>
+                    <a href="{% url 'delete_post' post.id %}" class="btn read-more pull-left">Видалити</a>
+                    <br>
+                {% endif %}
+                <!-- /Post Meta -->
+
+                <!-- Post Share -->
+
+                <!-- /Post Share -->
+            </article>
+            <!-- /Post Info -->
+
+            <!-- Post Comments -->
+            <div class="comments-block">
+                {% if post.postreview_set.count > 0 %}
+                    <h2>Коментарі <small>( {{ post.postreview_set.count }} )</small></h2>
+                {% elif post.postreview_set.count == 0 %}
+                    <h2>Коментарі <small>( {{ post.postreview_set.count }} )</small></h2>
+                    <p style="margin-bottom: -4rem;">Відкуків ще немає, стань першим!</p>
+                {% endif %}
+                <!-- Comments List -->
+                <ul class="comments-list">
+                    <!-- Kristen Bradley comment -->
+                    {% for postreview in post.postreview_set.all %}
+                        <li>
+                            <article>
+                                <div class="comment-avatar pull-left">
+                                    <img src="{{ postreview.user.profile.avatar.url }}" alt="">
+                                </div>
+                                <div class="comment-cont clearfix">
+                                    <h4><a class="comment-author h4"
+                                           href="{{ postreview.user.profile.get_absolute_url }}">{{ postreview.user.username }}</a>
+                                    </h4>
+                                    <div class="date">
+                                        <div class="date"><i class="fa fa-calendar"></i> {{ postreview.date }}</div>
+                                    </div>
+                                    <div class="comment-text">
+                                        {{ postreview.text }}
+                                    </div>
+                                </div>
+                            </article>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <!-- /Comments List -->
+
+                <h2>Залишити Коментар</h2>
+                {% if user.is_authenticated %}
+                    <!-- Comment Form -->
+                    <form action="{% url 'add_post_review' post.id %}" method="post"
+                          class="comment-form">{% csrf_token %}
+                        <div class="comment-cont clearfix">
+                            <div class="youplay-textarea">
+                                <input name="text" rows="5" placeholder="Your Comment...">
+                            </div>
+                            <button class="btn btn-default pull-right">Submit</button>
+                        </div>
+                    </form>
+                {% else %}
+                    <h6>Увійдіть в акаунт, щоб залишити коментар! Не маєте аккаунту, то створіть його!</h6>
+                    <br>
+                    <a class="btn btn-lg" href="{% url 'login' %}">Увійти</a>
+                    <a class="btn btn-lg" href="{% url 'signup' %}">Створити акаунт</a>
+                {% endif %}
+                <!-- /Comment Form -->
+            </div>
+            <!-- /Post Comments -->
+        </div>
+
+        <!-- Right Side -->
+        <div class="col-md-3">
+
+            <!-- Side Search -->
+            <div class="side-block">
+                <p>Пошук за Новинами:</p>
+                <form action="{% url 'search_posts' %}" method="get">
+                    <div class="youplay-input">
+                        <input type="text" name="q" placeholder="Пошук...">
+                    </div>
+                </form>
+            </div>
+            <!-- /Side Search -->
+            <!-- Side Popular News -->
+            {% get_popular_post_for_sidebar %}
+            <!-- /Side Popular News -->
+        </div>
+        <!-- /Right Side -->
+
+    </div>
+    <!-- Footer -->
+    <footer class="youplay-footer-parallax">
+        <div class="wrapper" style="background-image: url('{% static 'dark/assets/images/footer-bg.jpg' %}')">
+
+            <!-- Social Buttons -->
+            <div class="social">
+                <div class="container">
+                    <h3>Встановіть соціальні зв’язки з <strong>youplay</strong></h3>
+
+                    <div class="social-icons">
+                        <div class="social-icon">
+                            <a>
+                                <i class="fa fa-facebook-square"></i>
+                                <span>Поставте лайк на Facebook</span>
+                            </a>
+                        </div>
+                        <div class="social-icon">
+                            <a>
+                                <i class="fa fa-twitter-square"></i>
+                                <span>Підпишіться на Twitter</span>
+                            </a>
+                        </div>
+                        <div class="social-icon">
+                            <a>
+                                <i class="fa fa-youtube-square"></i>
+                                <span>Дивіться на Youtube</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Social Buttons -->
+
+            <!-- Copyright -->
+            <div class="copyright">
+                <div class="container">
+                    <strong>nK</strong> &copy; 2016. All rights reserved
+                </div>
+            </div>
+            <!-- /Copyright -->
+
+        </div>
+    </footer>
+    <!-- /Footer -->
+
+</section>
+<!-- /Main Content -->
+
+<!-- Search Block -->
+<div class="search-block">
+    <a href="" class="search-toggle glyphicon glyphicon-remove"></a>
+    <form action="{% url 'search' %}" method="get">
+        <div class="youplay-input">
+            <input type="text" name="q" placeholder="Пошук...">
+        </div>
+    </form>
+</div>
+<!-- /Search Block -->
+
+<!-- jQuery -->
+<script type="text/javascript" src="{% static 'assets/bower_components/jquery/dist/jquery.min.js' %}"></script>
+
+<!-- Hexagon Progress -->
+<script type="text/javascript"
+        src="{% static 'assets/bower_components/HexagonProgress/jquery.hexagonprogress.min.js' %}"></script>
+
+
+<!-- Bootstrap -->
+<script type="text/javascript" src="{% static 'assets/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+
+<!-- Jarallax -->
+<script type="text/javascript" src="{% static 'assets/bower_components/jarallax/dist/jarallax.min.js' %}"></script>
+
+<!-- Smooth Scroll -->
+<script type="text/javascript"
+        src="{% static 'assets/bower_components/smoothscroll-for-websites/SmoothScroll.js' %}"></script>
+
+<!-- Magnific Popup -->
+<script type="text/javascript"
+        src="{% static 'assets/bower_components/magnific-popup/dist/jquery.magnific-popup.min.js' %}"></script>
+
+<!-- Social Likes -->
+<script type="text/javascript"
+        src="{% static 'assets/bower_components/social-likes/dist/social-likes.min.js' %}"></script>
+<!-- Youplay -->
+<script type="text/javascript" src="{% static 'assets/youplay/js/youplay.min.js' %}"></script>
+
+<!-- init youplay -->
+<script>
+    if (typeof youplay !== 'undefined') {
+        youplay.init({
+            // enable parallax
+            parallax: true,
+
+            // set small navbar on load
+            navbarSmall: false,
+
+            // enable fade effect between pages
+            fadeBetweenPages: true,
+
+            // twitter and instagram php paths
+            php: {
+                twitter: './php/twitter/tweet.php',
+                instagram: './php/instagram/instagram.php'
+            }
+        });
+    }
+</script>
+
+
+</body>
+
+
+<!-- Mirrored from html.nkdev.info/youplay/dark/blog-post-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 May 2016 12:53:28 GMT -->
+</html>

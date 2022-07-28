@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+{% load static %}
+{% load game_tag %}
+<html>
+
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>youplay</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- Icon -->
+    <link rel="icon" type="image/png" href="{% static 'dark/assets/images/icon.png' %}">
+    <!-- Google Fonts -->
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/fontawesome.min.css"
+          integrity="sha384-zIaWifL2YFF1qaDiAo0JFgsmasocJ/rqu7LKYH8CoBEXqGbb9eO+Xi3s6fQhgFWM" crossorigin="anonymous">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/bower_components/bootstrap/dist/css/bootstrap.min.css' %}"/>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/bower_components/font-awesome/css/font-awesome.min.css' %}"/>
+
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/bower_components/owl.carousel/dist/assets/owl.carousel.min.css' %}"/>
+
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/bower_components/magnific-popup/dist/magnific-popup.css' %}"/>
+
+    <!-- Social Likes -->
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/bower_components/social-likes/dist/social-likes_flat.css' %}"/>
+    <!-- Youplay -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/youplay/css/youplay.min.css' %}"/>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'dark/assets/css/custom.css' %}"/>
+    <!-- RTL (uncomment this to enable RTL support) -->
+    <!-- <link rel="stylesheet" type="text/css" href="../assets/youplay/css/youplay-rtl.css" /> -->
+
+</head>
+
+
+<body>
+
+<!-- Preloader -->
+<div class="page-preloader preloader-wrapp">
+    <img src="{% static 'dark/assets/images/logo.png' %}" alt="">
+    <div class="preloader"></div>
+</div>
+<!-- /Preloader -->
+
+<!-- Navbar -->
+<nav class="navbar-youplay navbar navbar-default navbar-fixed-top ">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="off-canvas" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'main' %}">
+                <img src="{% static 'dark/assets/images/logo.png' %}" alt="">
+            </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown dropdown-hover active">
+                    <a href="{% url 'store' %}" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-expanded="false">
+                        Магазин <span class="caret"></span> <span class="label">ігри</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <ul role="menu">
+                            <li><a href="{% url 'store' %}">Список Товарів</a>
+                            </li>
+                            <li><a href="{% url 'store_popular' %}">Популярні Товари</a>
+                            </li>
+                            <li><a href="{% url 'cart_detail' %}">Кошик
+                                {% if request.session.cart|length == 0 %}
+                                {% else %}
+                                    <span class="badge bg-warning">{{ request.session.cart|length }}</span>
+                                    <span class="caret"></span>
+                                {% endif %}</a>
+                            </li>
+                            <li><a href="{% url 'сheckout' %}">Оформлення Замовлення</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropdown dropdown-hover ">
+                    <a href="{% url 'blog' %}" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-expanded="false">
+                        Блог <span class="caret"></span> <span class="label">новини</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <ul role="menu">
+                            <li><a href="{% url 'blog' %}">Список Новин</a>
+                            </li>
+                            <li><a href="{% url 'blog_popular' %}">Популярні Новини</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropdown dropdown-hover ">
+                    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Додатково <span class="caret"></span> <span class="label">повний список</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <ul role="menu">
+                            <li class="dropdown dropdown-submenu pull-left ">
+                                <a href="{% url 'userpage' %}" class="dropdown-toggle" data-toggle="dropdown"
+                                   role="button"
+                                   aria-expanded="false">Профіль</a>
+                                <div class="dropdown-menu">
+                                    {% if user.is_authenticated %}
+                                        <ul role="menu">
+                                            <li><a href="{% url 'userpage' %}">Профіль</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'user_settings_page' user.profile.id %}">Налаштування</a>
+                                            </li>
+                                            {% if request.user|has_group:"Редактор" %}
+                                                <li>
+                                                    <a href="{% url 'add_post' %}">Додати Пост</a>
+                                                </li>
+                                            {% else %}
+                                            {% endif %}
+                                            {% if request.user.is_superuser %}
+                                                <li><a href="{% url 'admin:index' %}" target="_blank">Адмін панель</a>
+                                                </li>
+                                            {% else %}
+                                            {% endif %}
+                                        </ul>
+                                    {% else %}
+                                        <ul role="menu">
+                                            <li class="divider"></li>
+                                            <li><a href="{% url 'signup' %}">Зареєструватися</a>
+                                            </li>
+                                            <li><a href="{% url 'login' %}">Увійти</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            <li><a href="{% url 'contact_us' %}">Напишіть Нам</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                    <li class="dropdown dropdown-hover">
+                        <a href="{% url 'userpage' %}" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            {{ user.get_username }}
+                            <span
+                                    class="label">це ви</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <ul role="menu">
+                                <li class="divider"></li>
+                                <li class="dropdown dropdown-submenu pull-left ">
+                                    <a href="{% url 'userpage' %}" class="dropdown-toggle" data-toggle="dropdown"
+                                       role="button"
+                                       aria-expanded="false">Профіль</a>
+                                    <div class="dropdown-menu">
+                                        <ul role="menu">
+                                            <li><a href="{% url 'userpage' %}">Профіль</a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'user_settings_page' user.profile.id %}">Налаштування</a>
+                                            </li>
+                                            {% if request.user|has_group:"Редактор" %}
+                                                <li>
+                                                    <a href="{% url 'add_post' %}">Додати Пост</a>
+                                                </li>
+                                            {% else %}
+                                            {% endif %}
+                                            {% if request.user.is_superuser %}
+                                                <li><a href="{% url 'admin:index' %}" target="_blank">Адмін панель</a>
+                                                </li>
+                                            {% else %}
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li><a href="{% url 'cart_detail' %}">Кошик
+                                    {% if request.session.cart|length == 0 %}
+                                    {% else %}
+                                        <span class="badge bg-warning">{{ request.session.cart|length }}</span>
+                                        <span class="caret"></span>
+                                    {% endif %}</a>
+                                </li>
+                                <li class="divider"></li>
+
+                                <li><a href="{% url 'logout' %}">Вихід</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="dropdown dropdown-hover">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Профіль <span class="caret"></span> <span
+                                class="label">увійдіть або зареєструйтеся</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <ul role="menu">
+                                <li class="divider"></li>
+                                <li><a href="{% url 'signup' %}">Зареєструватися</a>
+                                </li>
+                                <li><a href="{% url 'login' %}">Увійти</a>
+                                </li>
+                                <li class="divider"></li>
+                            </ul>
+                        </div>
+                    </li>
+                {% endif %}
+                <li>
+                    <a class="search-toggle" href="">
+                        <i class="fa fa-search"></i>
+                    </a>
+                </li>
+                <li class="dropdown dropdown-hover dropdown-cart">
+                    <a href="#!" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <i class="fa fa-shopping-cart"></i> 
+                        {% if request.session.cart|length == 0 %}
+                        {% else %}
+                            <span class="badge bg-default">{{ request.session.cart|length }}</span>
+                            <span class="caret"></span>
+                        {% endif %}
+                    </a>
+                    <div class="dropdown-menu" style="width: 300px;">
+
+                        <div class="row youplay-side-news">
+                            <div class="col-xs-3 col-md-4">
+                                <a class="angled-img"></a>
+                            </div>
+                            <div class="col-xs-9 col-md-8">
+
+                                <h4 class="ellipsis"><a href="{% url 'store' %}"
+                                                        title="Перейти До Магазину">Список Товарів</a></h4>
+
+                            </div>
+                        </div>
+                        {% for key,value in request.session.cart.items %}
+
+                            <div class="row youplay-side-news">
+                                <div class="col-xs-3 col-md-4">
+                                    <a href="{{ value.url }}" class="angled-img" title="{{ value.name }}">
+                                        <div class="img">
+
+                                            <img src="{{ value.image }}" alt="">
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xs-9 col-md-8">
+                                    <a href="{% url 'item_clear' value.product_id %}" style="text-decoration: none;"
+                                       class="pull-right mr-10"><i
+                                            class="fa fa-times" title="Видалити З Кошика"></i></a>
+
+                                    <h4 class="ellipsis"><a href="{{ value.url }}"
+                                                            title="{{ value.name }}">{{ value.name }}</a></h4>
+                                    <span class="quantity">{{ value.quantity }} × <span
+                                            class="amount">${{ value.price }}</span></span>
+                                </div>
+                            </div>
+
+
+
+                        {% endfor %}
+
+
+                        <div class="btn-group pull-right m-15">
+                            <a href="{% url 'cart_detail' %}" class="btn btn-default btn-sm">Кошик</a>
+                            <a href="{% url 'сheckout' %}" class="btn btn-default btn-sm">Оформлення</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- /Navbar -->
+
+
+<!-- Main Content -->
+<section class="content-wrap">
+
+    <!-- Banner -->
+    <div class="youplay-banner youplay-banner-parallax banner-top">
+        <div class="image" style="background-image: url('{{ game.banner.url }}')">
+        </div>
+
+        <div class="info">
+            <div>
+                <div class="container">
+                    <h1>{{ game.title }}</h1>
+                    <br>
+                    {% if game.sale_price > 0 and game.sale_price < 100 %}
+                        <a href="#!" class="btn btn-lg" title="Add to Cart">${{ game.get_sale }}<sup>
+                            <del>${{ game.price }}</del>
+                        </sup></a>
+                        <div class="badge bg-default">
+                            -{{ game.sale_price }}%
+                        </div>
+                    {% elif game.sale_price == 100 %}
+                        <a href="#!" class="btn btn-lg" title="Add to Cart">
+                            <div class="price"><span class="text-success">FREE!</span> <sup>
+                                <del>${{ game.price }}</del>
+                            </sup></div>
+                        </a>
+                        <div class="badge bg-success">
+                            -100%
+                        </div>
+                    {% else %}
+                        <a href="{% url 'cart_add' game.id %}" class="btn btn-lg"
+                           title="До кошика">${{ game.price }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Banner -->
+
+
+    <!-- Images With Text -->
+    <div class="youplay-carousel gallery-popup">
+        <a class="angled-img" href="{{ game.treiler }}">
+            <div class="img">
+                <img src="{{ game.treiler_img.url }}" alt="">
+            </div>
+            <i class="fa fa-play icon"></i>
+        </a>
+        {% for image in game.gameshots_set.all %}
+            <a class="angled-img" href="{{ image.image.url }}">
+                <div class="img">
+                    <img src="{{ image.image.url }}" alt="">
+                </div>
+                <i class="fa fa-search-plus icon" aria-hidden="true"></i>
+            </a>
+        {% endfor %}
+    </div>
+    <!-- /Images With Text -->
+
+
+    <div class="container youplay-store">
+
+        <div class="col-md-9">
+            <!-- Post Info -->
+            <article>
+
+                <!-- Description -->
+                <h2 class="mt-0">Про цю гру</h2>
+                <div class="description">
+                    {{ game.description|safe }}
+                </div>
+                <div class="requirements-block">
+                    <h2>Загальна інформація</h2>
+                    <div>
+                        <strong>Компанія:</strong>
+                        {% for company in game.company.all %}
+                            <a href="{{ company.get_absolute_url }}">{{ company.name }}</a>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <strong>Країна:</strong> {{ game.country }}
+                    </div>
+                    <div>
+                        <strong>Дата Виходу:</strong> {{ game.world_premiere }}
+                    </div>
+                    <div>
+                        <strong>Жанри:</strong>
+                        {% for ganre in game.ganres.all %}
+                            <a href="{{ ganre.get_absolute_url }}">{{ ganre.name }}</a>,
+                        {% endfor %}
+
+                    </div>
+                    <div>
+                        <strong>Категорії:</strong>
+                        {% for category in game.category.all %}
+                            <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>,
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- /Description -->
+
+                <!-- Post Share -->
+
+                <!-- /Post Share -->
+            </article>
+            <!-- /Post Info -->
+
+
+            <!-- Information -->
+            <div class="requirements-block">
+                <h2>Системні вимоги</h2>
+                <div>
+                    <strong>OS:</strong> {{ game.os }}
+                </div>
+                <div>
+                    <strong>Processor:</strong> {{ game.processor }}
+                </div>
+                <div>
+                    <strong>Memory:</strong> {{ game.memory }}
+                </div>
+                <div>
+                    <strong>Graphics:</strong> {{ game.graphics }}
+                </div>
+                <div>
+                    <strong>Hard Drive:</strong> {{ game.hard_drive }}
+                </div>
+            </div>
+            <!-- /Information -->
+
+
+            <!-- Reviews -->
+            {% if game.gamereview_set.count > 0 %}
+                <div class="reviews-block mb-0">
+                <h2>Відгуки <small>( {{ game.gamereview_set.count }} )</small></h2>
+
+            {% elif game.gamereview_set.count == 0 %}
+                <div class="reviews-block mb-0">
+                <h2>Відгуки <small>( {{ game.gamereview_set.count }} )</small></h2>
+                <p>Відкуків ще немає, стань першим!</p>
+                <div class="review-text">
+
+                </div>
+            {% endif %}
+            <!-- Reviews List -->
+            <ul class="reviews-list">
+                <!-- Kristen Bradley review -->
+                {% for gamereview in game.gamereview_set.all %}
+                    <li>
+                        <article>
+
+                            <div class="review-avatar pull-left">
+                                <img src="{{ gamereview.user.profile.avatar.url }}" alt="">
+                            </div>
+                            <div class="review-cont clearfix">
+                                <a class="comment-author h4"
+                                   href="{{ gamereview.user.profile.get_absolute_url }}">{{ gamereview.user.username }}</a>
+                                <div class="date"><i class="fa fa-calendar"></i> {{ gamereview.date }}</div>
+                                <div class="review-text">
+                                    <p>{{ gamereview.text }}</p>
+                                </div>
+                            </div>
+                        </article>
+                    </li>
+                {% endfor %}
+                <!-- /Kristen Bradley review -->
+            </ul>
+            <!-- /Reviews List -->
+            {% if user.is_authenticated %}
+                <!-- Review Form -->
+                <h2>Додайте Відгук</h2>
+                <form action="{% url 'add_review' game.id %}" method="post" class="review-form mb-0">{% csrf_token %}
+                    <div class="review-cont clearfix">
+                        <div class="youplay-textarea">
+                            <input name="text" rows="5" placeholder="Ваш Відгук..."></input>
+                        </div>
+                        <!--<div class="youplay-rating pull-right">
+                            <input type="radio" id="review-rate-5" name="review-rate" value="5">
+                            <label for="review-rate-5"><i class="fa fa-star"></i>
+                            </label>
+                            <input type="radio" id="review-rate-4" name="review-rate" value="4">
+                            <label for="review-rate-4"><i class="fa fa-star"></i>
+                            </label>
+                            <input type="radio" id="review-rate-3" name="review-rate" value="3">
+                            <label for="review-rate-3"><i class="fa fa-star"></i>
+                            </label>
+                            <input type="radio" id="review-rate-2" name="review-rate" value="2">
+                            <label for="review-rate-2"><i class="fa fa-star"></i>
+                            </label>
+                            <input type="radio" id="review-rate-1" name="review-rate" value="1">
+                            <label for="review-rate-1"><i class="fa fa-star"></i>
+                            </label>
+                        </div>-->
+                        <div class="clearfix"></div>
+                        <button class="btn btn-default pull-right">Submit</button>
+                    </div>
+                </form>
+                <!-- /Review Form -->
+            {% else %}
+                <h6>Увійдіть в акаунт, щоб залишити відгук! Не маєте аккаунту, то створіть його!</h6>
+                <br>
+                <a class="btn btn-lg" href="{% url 'login' %}">Увійти</a>
+                <a class="btn btn-lg" href="{% url 'signup' %}">Створити акаунт</a>
+            {% endif %}
+            </div>
+            <br>
+            <br>
+            <!-- /Reviews -->
+
+            </div>
+
+            <!-- Right Side -->
+            <div class="col-md-3">
+
+                <!-- Side Search -->
+                <div class="side-block">
+                    <p>Пошук за Iграми:</p>
+                    <form action="{% url 'search_games' %}" method="get">
+                        <div class="youplay-input">
+                            <input type="text" name="q" placeholder="Пошук...">
+                        </div>
+                    </form>
+                </div>
+                <!-- /Side Search -->
+
+                <!-- Side Categories -->
+                <div class="side-block">
+                    <h4 class="block-title">Категорії</h4>
+                    <ul class="block-content">
+                        {% get_categories as categories %}
+                        {% for category in categories %}
+                            <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- /Side Categories -->
+                <!-- Side Categories -->
+                <div class="side-block">
+                    <h4 class="block-title">Жанри</h4>
+                    <ul class="block-content">
+                        {% get_ganres as ganres %}
+                        {% for ganre in ganres %}
+                            <li><a href="{{ ganre.get_absolute_url }}">{{ ganre.name }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- /Side Categories -->
+
+                <!-- Side Popular News -->
+                <div class="side-block">
+                    <h4 class="block-title">Популярні Ігри</h4>
+                    <div class="block-content p-0">
+                        <!-- Single News Block -->
+                        {% get_popular_game_for_sidebar %}
+                        <!-- /Single News Block -->
+                    </div>
+                </div>
+                <!-- /Side Popular News -->
+            </div>
+            <!-- /Right Side -->
+
+        </div>
+
+        <!-- Specials -->
+        <h2 class="container h1">Спеціальні Пропозиції <a href="#!" class="btn pull-right">Побачити Більше</a></h2>
+        <div class="youplay-carousel">
+            {% get_sale_games_for_slider %}
+        </div>
+        <!-- /Specials -->
+
+    <!-- Footer -->
+    <footer class="youplay-footer-parallax">
+        <div class="wrapper" style="background-image: url('{% static 'dark/assets/images/footer-bg.jpg' %}')">
+
+            <!-- Social Buttons -->
+            <div class="social">
+                <div class="container">
+                    <h3>Встановіть соціальні зв’язки з <strong>youplay</strong></h3>
+
+                    <div class="social-icons">
+                        <div class="social-icon">
+                            <a>
+                                <i class="fa fa-facebook-square"></i>
+                                <span>Поставте лайк на Facebook</span>
+                            </a>
+                        </div>
+                        <div class="social-icon">
+                            <a>
+                                <i class="fa fa-twitter-square"></i>
+                                <span>Підпишіться на Twitter</span>
+                            </a>
+                        </div>
+                        <div class="social-icon">
+                            <a>
+                                <i class="fa fa-youtube-square"></i>
+                                <span>Дивіться на Youtube</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Social Buttons -->
+
+            <!-- Copyright -->
+            <div class="copyright">
+                <div class="container">
+                    <strong>nK</strong> &copy; 2016. All rights reserved
+                </div>
+            </div>
+            <!-- /Copyright -->
+
+        </div>
+    </footer>
+    <!-- /Footer -->
+
+</section>
+<!-- /Main Content -->
+
+<!-- Search Block -->
+<div class="search-block">
+    <a href="" class="search-toggle glyphicon glyphicon-remove"></a>
+    <form action="{% url 'search' %}" method="get">
+        <div class="youplay-input">
+            <input type="text" name="q" placeholder="Пошук...">
+        </div>
+    </form>
+</div>
+<!-- /Search Block -->
+
+<!-- jQuery -->
+<script type="text/javascript" src="{% static 'assets/bower_components/jquery/dist/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/rating.js' %}"></script>
+
+<!-- Hexagon Progress -->
+<script type="text/javascript"
+        src="{% static 'assets/bower_components/HexagonProgress/jquery.hexagonprogress.min.js' %}"></script>
+
+
+<!-- Bootstrap -->
+<script type="text/javascript" src="{% static 'assets/bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+
+<!-- Jarallax -->
+<script type="text/javascript" src="{% static 'assets/bower_components/jarallax/dist/jarallax.min.js' %}"></script>
+
+<!-- Smooth Scroll -->
+<script type="text/javascript"
+        src="{% static 'assets/bower_components/smoothscroll-for-websites/SmoothScroll.js' %}"></script>
+
+<!-- Owl Carousel -->
+<script type="text/javascript"
+        src="{% static 'assets/bower_components/owl.carousel/dist/owl.carousel.min.js' %}"></script>
+
+<!-- Magnific Popup -->
+<script type="text/javascript"
+        src="{% static 'assets/bower_components/magnific-popup/dist/jquery.magnific-popup.min.js' %}"></script>
+
+<!-- Social Likes -->
+<script type="text/javascript"
+        src="{% static 'assets/bower_components/social-likes/dist/social-likes.min.js' %}"></script>
+<!-- Youplay -->
+<script type="text/javascript" src="{% static 'assets/youplay/js/youplay.min.js' %}"></script>
+
+<!-- init youplay -->
+<script>
+    if (typeof youplay !== 'undefined') {
+        youplay.init({
+            // enable parallax
+            parallax: true,
+
+            // set small navbar on load
+            navbarSmall: false,
+
+            // enable fade effect between pages
+            fadeBetweenPages: true,
+
+            // twitter and instagram php paths
+            php: {
+                twitter: './php/twitter/tweet.php',
+                instagram: './php/instagram/instagram.php'
+            }
+        });
+    }
+</script>
+
+
+</body>
+
+
+<!-- Mirrored from html.nkdev.info/youplay/dark/store-product-1.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 May 2016 12:50:00 GMT -->
+</html>

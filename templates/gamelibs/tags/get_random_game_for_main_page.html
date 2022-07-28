@@ -1,0 +1,17 @@
+{% for game in get_random_game_for_main_page %}
+    <div class="image" style="background-image: url('{{ game.banner.url }}');">
+    </div>
+
+    <div class="info container align-center">
+        <div>
+            <h2>{{ game.title }}</h2>
+
+            <!-- See countdown init in bottom of the page -->
+            <h3>Випадкова гра</h3>
+
+            <br>
+            <br>
+            <a class="btn btn-lg" href="{{ game.get_absolute_url }}">Докладніше</a>
+        </div>
+    </div>
+{% endfor %}

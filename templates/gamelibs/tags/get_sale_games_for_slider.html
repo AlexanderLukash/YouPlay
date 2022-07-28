@@ -1,0 +1,44 @@
+{% load static %}
+{% for game in get_sale_games_for_slider %}
+    {% if game.sale_price > 0 and game.sale_price < 100 %}
+    <a class="angled-img" href="{{ game.get_absolute_url }}">
+        <div class="img img-offset">
+            <img src="{{ game.poster.url }}" alt="">
+            <div class="badge bg-default">
+                -{{ game.sale_price }}%
+            </div>
+        </div>
+        <div class="bottom-info">
+            <h4>{{ game.title }}</h4>
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="price">${{ game.get_sale }} <sup>
+                        <del>${{ game.price }}</del>
+                    </sup>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+    {% elif game.sale_price == 100 %}
+        <a class="angled-img" href="{{ game.get_absolute_url }}">
+            <div class="img img-offset">
+                <img src="{{ game.poster.url }}" alt="">
+                <div class="badge bg-success">
+                    -100%
+                </div>
+            </div>
+            <div class="bottom-info">
+                <h4>{{ game.title }}</h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="price"><span class="text-success">FREE!</span> <sup>
+                            <del>${{ game.price }}</del>
+                        </sup>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    {% endif %}
+{% endfor %}

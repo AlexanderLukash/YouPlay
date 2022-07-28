@@ -1,0 +1,29 @@
+<!-- Side Popular News -->
+<div class="side-block">
+    <h4 class="block-title">Популярні Новини</h4>
+    <div class="block-content p-0">
+        {% for post in get_popular_post_for_sidebar %}
+            <!-- Single News Block -->
+            <div class="row youplay-side-news">
+                <div class="col-xs-3 col-md-4">
+                    <a href="{{ post.get_absolute_url }}" class="angled-img" >
+                        <div class="img">
+                            {% for game in post.games.all %}
+                                <img src="{{ game.poster.url }}" alt="{{ post.title }}">
+                            {% endfor %}
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xs-9 col-md-8">
+                    <h4 class="ellipsis"><a href="{{ post.get_absolute_url }}" title="{{ post.title }}">{{ post.title }}</a>
+                    </h4>
+                    <span class="date"><i class="fa fa-calendar"></i> {{ post.premiere }}</span>
+                </div>
+            </div>
+            <!-- /Single News Block -->
+
+
+            <!-- /Side Popular News -->
+        {% endfor %}
+    </div>
+</div>

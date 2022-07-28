@@ -1,0 +1,27 @@
+{% for game in get_popular_game_for_sidebar %}
+    <div class="row youplay-side-news">
+        <div class="col-xs-3 col-md-4">
+            <a href="{{ game.get_absolute_url }}" class="angled-img">
+                <div class="img">
+                    <img src="{{ game.poster.url }}" alt="">
+                </div>
+            </a>
+        </div>
+        <div class="col-xs-9 col-md-8">
+            <h4 class="ellipsis"><a href="{{ game.get_absolute_url }}" title="{{ game.title }}">{{ game.title }}</a></h4>
+            {% if game.sale_price > 0 and game.sale_price < 100 %}
+                <div class="price">${{ game.get_sale }} <sup>
+                    <del>${{ game.price }}</del>
+                </sup></div>
+                </sup>
+            {% elif game.sale_price == 100 %}
+                <div class="price"><span class="text-success">FREE!</span> <sup>
+                    <del>${{ game.price }}</del>
+                </sup>
+                </div>
+            {% else %}
+                <span class="price">${{ game.price }}</span>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}

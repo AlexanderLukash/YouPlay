@@ -1,0 +1,26 @@
+/**
+ * 
+ * Type your custom styles
+ *
+ */
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+
+.pagination {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.25rem;
+}
+
+.angled-img .bottom-info h4 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 1rem;
+}
+
+.angled-img .bottom-info h4:after {
+    bottom: 0rem;
+    margin-top: 1.99999rem;
+
+}
