@@ -1,4 +1,4 @@
-# YouPlay [![youplay](https://github.com/AlexanderLukash/YouPlay/blob/main/static/dark/assets/images/icon.png)]
+# YouPlay ![youplay](https://github.com/AlexanderLukash/YouPlay/blob/main/static/dark/assets/images/icon.png)
 ## Online store of computer games, created using Django.
 
 ### Implemented systems:
