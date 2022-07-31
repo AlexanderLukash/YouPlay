@@ -12,3 +12,12 @@
 + Searching system
 + Profile system
 + And some other things...
+
+## A short show: 
+![youplay](https://github.com/AlexanderLukash/YouPlay/blob/main/gif/15ced646-c025-43ba-8a7d-8fae9ff9058f%20(online-video-cutter.com).gif?raw=true)
+
+![youplay](https://github.com/AlexanderLukash/YouPlay/blob/main/gif/7722ed36-4a01-4782-8610-047de3e43bbb%20(online-video-cutter.com).gif?raw=true)
+
+![youplay](https://github.com/AlexanderLukash/YouPlay/blob/main/gif/8163dafb-c91e-42fb-9540-e4f984bc36da%20(online-video-cutter.com).gif?raw=true)
+
+![youplay](https://github.com/AlexanderLukash/YouPlay/blob/main/gif/c4e5ca4f-a8d0-4886-8d0a-e189e4650c27%20(online-video-cutter.com)%20(1).gif?raw=true)
