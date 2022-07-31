@@ -23,3 +23,14 @@ ___
 ![youplay](https://github.com/AlexanderLukash/YouPlay/blob/main/gif/8163dafb-c91e-42fb-9540-e4f984bc36da%20(online-video-cutter.com).gif?raw=true)
 
 ![youplay](https://github.com/AlexanderLukash/YouPlay/blob/main/gif/c4e5ca4f-a8d0-4886-8d0a-e189e4650c27%20(online-video-cutter.com)%20(1).gif?raw=true)
+  ___
+
+  ![](https://icds.ee/wp-content/uploads/2022/03/Artboard-31200-1.png)
+
+  ### Help Ukraine!	
+
+  #### To donate money for the Ukrainian army:
+
+  #### Link: https://war.ukraine.ua/donate/
+
+  ##### 💙💛 Glory To Ukraine 💙💛
