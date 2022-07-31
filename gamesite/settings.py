@@ -19,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-v!45v5xahx%)z*%0mi#j%19&&q-aub_2egdt%$wgb^^0ysfv8o'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -83,16 +83,6 @@ WSGI_APPLICATION = 'gamesite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dccoehh6i15cnv',
-        'USER': 'svgvyzybfpimdv',
-        'PASSWORD': '263ea827af5c62c5951f706b6da00bfd76fe975356e94f26c14f315102a7ed70',
-        'HOST': 'ec2-54-75-184-144.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432',
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -353,12 +343,3 @@ LOGIN_REDIRECT_URL = '/'
 
 HITCOUNT_HITS_PER_IP_LIMIT = 0
 
-GOOGLE_RECAPTCHA_SECRET_KEY = '6LdgovwgAAAAADsa5Lu5bsRO6vwsqJdLkeZWviyA'
-
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '627855245065-qtvvha65m3eil698iscnm1k7n0d5u0ho.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
-SOCIAL_AUTH_GITHUB_KEY = '992929d7c22f077bc95e'
-SOCIAL_AUTH_GITHUB_SECRET = '23326a8c9b02f9d4b6dded1e9d17c1499593af19'
-SOCIAL_AUTH_STEAM_API_KEY = 'A6D8919FCBAC1C2FFCC3AF15D0C9336E'
-SOCIAL_AUTH_STEAM_EXTRA_DATA = ['player']
