@@ -9,3 +9,6 @@
 + Comment and feedback system
 + Integration of reCAPTCHA
 + Ability to add, edit and delete posts
++ Searching system
++ Profile system
++ And some other things...
