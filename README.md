@@ -1,5 +1,7 @@
 ![youplay](https://github.com/AlexanderLukash/YouPlay/blob/main/static/dark/assets/images/logo.png?raw=true)
+___
 ## Online store of computer games, created using Django.
+### Design by [nk-o](https://github.com/nk-o)
 
 ### Implemented systems:
 + Login with Steam
