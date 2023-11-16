@@ -1,7 +1,19 @@
 ![youplay](https://github.com/AlexanderLukash/YouPlay/blob/main/static/dark/assets/images/logo.png?raw=true)
 ___
-## Online store of computer games, created using Django.
-### Design by [nk-o](https://github.com/nk-o)
+# YouPlay
+#### Online store of computer games, created using Django.
+###### Design by [nk-o](https://github.com/nk-o)
+
+
+<img src="/gif/Thumbnail2.jpg">
+
+<h2>Technologies Used:</h2>
+<ul>
+    <li>Python</li>
+    <li>Django</li>
+    <li>Bootstrap</li>
+    <li>JavaScript</li>
+</ul>
 
 ### Implemented systems:
 + Login with Steam
@@ -25,12 +37,11 @@ ___
 ![youplay](https://github.com/AlexanderLukash/YouPlay/blob/main/gif/c4e5ca4f-a8d0-4886-8d0a-e189e4650c27%20(online-video-cutter.com)%20(1).gif?raw=true)
   ___
 
-  ![](https://icds.ee/wp-content/uploads/2022/03/Artboard-31200-1.png)
 
-  ### Help Ukraine!	
+### Help Ukraine!	
 
   #### To donate money for the Ukrainian army:
 
   #### Link: https://war.ukraine.ua/donate/
 
-  ##### 💙💛 Glory To Ukraine 💙💛
+  ###### 💙💛 Glory To Ukraine 💙💛
